@@ -1,8 +1,8 @@
 import React from "react";
 import SearchForm from "./components/SearchForm.jsx";
-import Nav from './components/Nav.jsx';
+import Nav from "./components/Nav.jsx";
 import PhotoContainer from "./components/PhotoContainer.jsx";
-import '/css/index.css';
+import './index.css';
 
 
 const App = () => {
