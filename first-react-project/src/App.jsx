@@ -6,8 +6,6 @@ import './index.css';
 import apiKey from "./assets/config.js";
 
 
-const apiKey = apiKey;
-
 
 const App = () => {
 
