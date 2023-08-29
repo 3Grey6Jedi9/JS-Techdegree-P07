@@ -20,7 +20,7 @@ const PhotoContainer = ({ fetchedData }) => {
             <h2>Results</h2>
             {console.log(resultsFound)}
             {console.log(photoUrls.length)}
-
+            
             <ul>
                 {photoUrls.map((url, index) => (
                     <Photo key={index} imageUrl={url} />
