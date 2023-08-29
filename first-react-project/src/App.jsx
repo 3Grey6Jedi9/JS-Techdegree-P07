@@ -58,6 +58,7 @@ const App = () => {
                     <Route path="/search" element={<SearchResults />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
+                <PhotoContainer fetchedData={fetchedData}/>
             </div>
         </Router>
     );

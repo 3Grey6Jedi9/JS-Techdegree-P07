@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import Photo from "./Photo.jsx";
 import NotFound from "./NotFound.jsx";
 
-const PhotoContainer = () => {
+const PhotoContainer = ({fetchedData}) => {
 
     const photoUrls = []; // URLs of images here
 
