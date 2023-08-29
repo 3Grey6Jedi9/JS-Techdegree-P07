@@ -33,8 +33,9 @@ const App = () => {
                 // This block of code will run when the request is succesful
                 console.log(response.data); // Accessing the parsed JSON data
                 setFetchedData(response.data);
-                console.log("Farm value:", fetchedData.photos.photo[0].farm);
-
+                if (fetchedData) {
+        console.log("Farm value:", fetchedData.photos.photo[0].farm);
+    } // I need to give it time to fetche the data
             })
             .catch(error => {
                 // This block of code runs when there's an error
