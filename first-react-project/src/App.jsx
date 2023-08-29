@@ -15,17 +15,20 @@ import axios from "axios";
 
 
 let tags = "cats"; // the firt 2 calls are not detected
-let perPage = 24;
-const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${tags}&per_page=${perPage}&format=json&nojsoncallback=1`;
+const perPage = 24;
 
 
 
 const App = () => {
 
+    const [tags, setTags] = useState(null)
     const [fetchedData, setFetchedData] = useState(null);
 
 
     useEffect(() => {
+
+        const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${tags}&per_page=${perPage}&format=json&nojsoncallback=1`;
+
 
         // Fetching data here using axios
         axios.get(apiUrl) // Sending a GET request
@@ -33,9 +36,8 @@ const App = () => {
                 // This block of code will run when the request is succesful
                 console.log(response.data); // Accessing the parsed JSON data
                 setFetchedData(response.data);
-                if (fetchedData) {
-        console.log("Farm value:", fetchedData.photos.photo[0].farm);
-    } // I need to give it time to fetche the data
+                console.log(fetchedData)
+
             })
             .catch(error => {
                 // This block of code runs when there's an error
@@ -43,13 +45,13 @@ const App = () => {
 
             });
 
-    }, []); // Empty dependency array ensures this runs once when the component mounts
+    }, [tags]); // Updates when tags changes
 
     return (
         <Router>
             <div className="container">
-                <SearchForm />
-                <Nav />
+                <SearchForm setTags={setTags} /> {/*Passing setTags as a prop*/}
+                <Nav setTags={setTags} /> {/* Pass setTags as a prop */}
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/cats" element={<Cats />} />

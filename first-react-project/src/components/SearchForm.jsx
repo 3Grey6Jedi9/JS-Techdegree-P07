@@ -1,46 +1,31 @@
-import React, {useEffect, useState} from 'react';
-import { Link } from "react-router-dom"; // Import Link
+import React, { useState } from 'react';
 
-
-
-const SearchForm = () => {
-
+const SearchForm = ({ setTags }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleSearch = (e) => {
-
         e.preventDefault();
-        // Navigating to search results page with search query as parameter
-
-        window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
-
+        // Update tags and trigger data fetching with new tag
+        setTags(searchQuery);
     };
 
     return (
+        <form className="search-form" onSubmit={handleSearch}>
+            <input
+                type="text"
+                name="search"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                required
+            />
 
-    <form className="search-form" onSubmit={handleSearch}>
-       <input
-           type="text"
-           name="search"
-           placeholder="Search"
-           value = {searchQuery}
-           onChange={(e)=> setSearchQuery(e.target.value)}
-           required
-           />
-
-        <button type="submit" className="search-button">
-
-            Search
-
-        </button>
-
-
-    </form>
-
+            <button type="submit" className="search-button">
+                Search
+            </button>
+        </form>
     );
-
 };
 
-
-
 export default SearchForm;
+

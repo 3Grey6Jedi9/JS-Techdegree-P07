@@ -9,7 +9,12 @@ import { Link } from "react-router-dom"; // Importing Link
 
 
 
-const Nav = () => {
+const Nav = ({setTags}) => {
+
+    // Generate 3 random topics for navigation
+
+    const topics = ["cats", "dogs", "computers"];
+    const randomTopics = topics.sort(() => 0.5 - Math.random()).slice(0,3);
 
     return (
 
@@ -17,10 +22,13 @@ const Nav = () => {
 
      <ul>
 
-         <li><Link to="/cats">Cats</Link></li>
-         <li><Link to="/dogs">Dogs</Link></li>
-         <li><Link to="/computers">Computers</Link></li>
-
+         {randomTopics.map((topic, index) => (
+                    <li key={index}>
+                        <Link to={`/${topic}`} onClick={() => setTags(topic)}>
+                            {topic.charAt(0).toUpperCase() + topic.slice(1)}
+                        </Link>
+                    </li>
+                ))}
 
      </ul>
 
