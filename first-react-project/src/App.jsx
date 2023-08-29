@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import SearchForm from "./components/SearchForm.jsx";
 import Nav from "./components/Nav.jsx";
 import PhotoContainer from "./components/PhotoContainer.jsx";
@@ -22,6 +22,9 @@ const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.searc
 
 const App = () => {
 
+    const [fetchedData, setFetchedData] = useState(null);
+
+
     useEffect(() => {
 
         // Fetching data here using axios
@@ -29,6 +32,8 @@ const App = () => {
             .then(response => {
                 // This block of code will run when the request is succesful
                 console.log(response.data); // Accessing the parsed JSON data
+                setFetchedData(response.data);
+                console.log("Farm value:", fetchedData.photos.photo[0].farm);
 
             })
             .catch(error => {
