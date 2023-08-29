@@ -4,9 +4,20 @@ import React, {useState} from "react";
 import Photo from "./Photo.jsx";
 import NotFound from "./NotFound.jsx";
 
+
+let photoUrls = [];
+
 const PhotoContainer = ({fetchedData}) => {
 
-    const photoUrls = []; // URLs of images here
+    const PhotoContainer = ({fetchedData}) => {
+
+         photoUrls = fetchedData.photos.photo.map(photo => {
+            const url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
+            return url;
+
+        });
+
+    }
 
 
 //Using state to track if there are results

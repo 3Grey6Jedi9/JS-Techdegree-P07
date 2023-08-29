@@ -14,7 +14,7 @@ import NotFound from "./components/NotFound.jsx";
 import axios from "axios";
 
 
-let tags = "sunsets";
+let tags = "cats"; // the firt 2 calls are not detected
 let perPage = 24;
 const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${tags}&per_page=${perPage}&format=json&nojsoncallback=1`;
 
