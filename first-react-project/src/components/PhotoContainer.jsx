@@ -1,53 +1,38 @@
-// This component will manage the photo results and handle state
-
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import Photo from "./Photo.jsx";
 import NotFound from "./NotFound.jsx";
 
+const PhotoContainer = ({ fetchedData }) => {
+    const [photoUrls, setPhotoUrls] = useState([]);
 
-let photoUrls = [];
-
-const PhotoContainer = ({fetchedData}) => {
-
-    const PhotoContainer = ({fetchedData}) => {
-
-         photoUrls = fetchedData.photos.photo.map(photo => {
-            const url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
-            return url;
-
+    useEffect(() => {
+        const urls = fetchedData.photos.photo.map(photo => {
+            return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
         });
 
-    }
+        setPhotoUrls(urls);
+    }, [fetchedData]);
 
-
-//Using state to track if there are results
-
-    const [resultsFound, setResultsFound] = useState(photoUrls.length > 0);
+    const resultsFound = photoUrls.length > 0;
 
     return (
-
         <div className="photo-container">
-
             <h2>Results</h2>
+            {console.log(resultsFound)}
+            {console.log(photoUrls.length)}
+
             <ul>
-                {photoUrls.map((url,index)=> (
-
-                   <Photo key={index} imageUrl={url} />
-
+                {photoUrls.map((url, index) => (
+                    <Photo key={index} imageUrl={url} />
                 ))}
 
-                {!resultsFound && <NotFound/>}
-
+                {!resultsFound && <NotFound />}
             </ul>
-
         </div>
-
     );
-
 };
 
-
-
 export default PhotoContainer;
+
 
 
