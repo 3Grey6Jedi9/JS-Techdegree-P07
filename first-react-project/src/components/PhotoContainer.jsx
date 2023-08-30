@@ -4,13 +4,17 @@ import NotFound from "./NotFound.jsx";
 
 const PhotoContainer = ({ fetchedData }) => {
     const [photoUrls, setPhotoUrls] = useState([]);
+    const [photoIds, setIds] = useState([]);
 
     useEffect(() => {
         const urls = fetchedData.photos.photo.map(photo => {
             return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
         });
 
+        const ids = fetchedData.photos.photo.map(photo => photo.id)
+
         setPhotoUrls(urls);
+        setIds(ids);
     }, [fetchedData]);
 
     const resultsFound = photoUrls.length > 0;
@@ -23,7 +27,7 @@ const PhotoContainer = ({ fetchedData }) => {
             
             <ul>
                 {photoUrls.map((url, index) => (
-                    <Photo key={index} imageUrl={url} />
+                    <Photo key={photoIds[index]} imageUrl={url} />
                 ))}
 
                 {!resultsFound && <NotFound />}
