@@ -56,7 +56,9 @@ const App = () => {
                     <Route path="/cats" element={<Cats title="Cats Page" />} />
                     <Route path="/dogs" element={<Dogs title="Dogs Page" />} /> {/* Use element prop */}
                     <Route path="/computers" element={<Computers title="Computers Page" />} />
-                    <Route path="*" element={<NotFound title="Not Found Page" />} />
+                    {!fetchedData &&
+                        <Route path="*" element={<NotFound title="Not Found Page"/>}/>
+                    }
                 </Routes>
                 {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} />}
             </div>
