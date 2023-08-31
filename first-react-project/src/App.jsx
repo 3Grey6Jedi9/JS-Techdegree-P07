@@ -9,7 +9,6 @@ import Cats from "./components/Cats.jsx";
 import Dogs from "./components/Dogs.jsx"; // Make sure this import is correct
 import Home from "./components/Home.jsx";
 import Computers from "./components/Computers.jsx";
-import SearchResults from "./components/SearchResults.jsx";
 import NotFound from "./components/NotFound.jsx";
 import axios from "axios";
 
@@ -53,14 +52,13 @@ const App = () => {
                 <SearchForm setTags={setTags} /> {/*Passing setTags as a prop*/}
                 <Nav setTags={setTags} /> {/* Pass setTags as a prop */}
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/cats" element={<Cats />} />
-                    <Route path="/dogs" element={<Dogs />} /> {/* Use element prop */}
-                    <Route path="/computers" element={<Computers />} />
-                    <Route path="/search" element={<SearchResults />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="/" element={<Home title="Home Page" />} />
+                    <Route path="/cats" element={<Cats title="Cats Page" />} />
+                    <Route path="/dogs" element={<Dogs title="Dogs Page" />} /> {/* Use element prop */}
+                    <Route path="/computers" element={<Computers title="Computers Page" />} />
+                    <Route path="*" element={<NotFound title="Not Found Page" />} />
                 </Routes>
-                {fetchedData && <PhotoContainer fetchedData={fetchedData} />}
+                {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} />}
             </div>
         </Router>
     );

@@ -1,9 +1,9 @@
 import React from "react";
 
-const Dogs = () => {
+const Dogs = ({title}) => {
   return (
     <div>
-      <h1>Dogs Page</h1>
+      <h1>{title}</h1>
     </div>
   );
 };

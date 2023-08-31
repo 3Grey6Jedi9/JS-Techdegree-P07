@@ -1,10 +1,10 @@
 import React from "react";
 
-const Cats = () => {
+const Cats = ({title}) => {
   return (
 
     <div>
-      <h1>Cats Page</h1>
+      <h1>{title}</h1>
     </div>
 
 

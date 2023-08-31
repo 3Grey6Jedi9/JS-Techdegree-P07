@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import {useNavigate} from "react-router-dom";
 
 const SearchForm = ({ setTags }) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
     const handleSearch = (e) => {
         e.preventDefault();
-        // Update tags and trigger data fetching with new tag
+        // Updating tags and triggering data fetching with new tag
         setTags(searchQuery);
+        navigate(`/search?q=${searchQuery}`);
     };
 
     return (
