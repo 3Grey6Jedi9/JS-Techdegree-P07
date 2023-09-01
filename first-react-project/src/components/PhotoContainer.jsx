@@ -14,6 +14,8 @@ const PhotoContainer = () => {
     const searchQuery = new URLSearchParams(location.search).get('q');
     const { query: urlQuery } = useParams();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         if (urlQuery) {
             setQuery(urlQuery);
@@ -25,6 +27,9 @@ const PhotoContainer = () => {
     }, [urlQuery, searchQuery]);
 
     useEffect(() => {
+
+        setIsLoading(true); // Setting loading state when starting to fetch data
+
         if (query) {
             const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
 
@@ -40,9 +45,11 @@ const PhotoContainer = () => {
                         setPhotoUrls(searchUrls);
                         setIds(searchIds);
                     }
+                    setIsLoading(false); // Resetting loading state when data is fetched
                 })
                 .catch((error) => {
                     console.error('Error fetching search results:', error);
+                    setIsLoading(false); // Resetting loading state on error
                 });
         }
     }, [query]);
@@ -51,20 +58,29 @@ const PhotoContainer = () => {
 
     return (
         <div className="photo-container">
-            <h2>Search Results for: {query}</h2>
+            {isLoading ? (
+                <h2>Loading...</h2>
+            ) : (
+                <>
+                    <h2>Search Results for: {query}</h2>
 
-            <ul>
-                {photoUrls.map((url, index) => (
-                    <Photo key={photoIds[index]} imageUrl={url} />
-                ))}
+                    <ul>
+                        {photoUrls.map((url, index) => (
+                            <Photo key={photoIds[index]} imageUrl={url} />
+                        ))}
 
-                {!resultsFound && <NotFound />}
-            </ul>
+                        {!resultsFound && <NotFound />}
+                    </ul>
+                </>
+            )}
         </div>
     );
 };
 
 export default PhotoContainer;
+
+
+
 
 
 
