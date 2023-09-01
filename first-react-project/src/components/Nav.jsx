@@ -24,7 +24,7 @@ const Nav = ({setTags}) => {
 
          {randomTopics.map((topic, index) => (
                     <li key={index}>
-                        <Link to={`/${topic}`} onClick={() => setTags(topic)}>
+                        <Link to={`/search/${topic}`} onClick={() => setTags(topic)}>
                             {topic.charAt(0).toUpperCase() + topic.slice(1)}
                         </Link>
                     </li>

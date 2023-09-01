@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {useNavigate} from "react-router-dom";
 
-const SearchForm = ({ setTags }) => {
+
+const SearchForm = ({ setTags}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 

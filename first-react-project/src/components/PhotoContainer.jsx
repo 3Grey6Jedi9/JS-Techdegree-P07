@@ -3,29 +3,18 @@ import Photo from "./Photo.jsx";
 import NotFound from "./NotFound.jsx";
 import axios from "axios";
 import apiKey from "../assets/config.js"; // Make sure to import apiKey
+import { useParams, useLocation } from "react-router-dom";
 
-const PhotoContainer = ({ fetchedData, location }) => {
+const PhotoContainer = () => {
     const [photoUrls, setPhotoUrls] = useState([]);
     const [photoIds, setIds] = useState([]);
 
-    const searchQuery = new URLSearchParams(location.search).get('q');
+    const searchQuery = new URLSearchParams(useLocation().search).get('q');
+    const { query } = useParams();
 
     useEffect(() => {
-        if (fetchedData && fetchedData.photos && fetchedData.photos.photo) {
-            const urls = fetchedData.photos.photo.map(photo => {
-                return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
-            });
-
-            const ids = fetchedData.photos.photo.map(photo => photo.id);
-
-            setPhotoUrls(urls);
-            setIds(ids);
-        }
-    }, [fetchedData]);
-
-    useEffect(() => {
-        if (searchQuery) {
-            const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${searchQuery}&per_page=24&format=json&nojsoncallback=1`;
+        if (query) {
+            const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
 
             axios.get(apiUrl)
                 .then((response) => {
@@ -43,14 +32,34 @@ const PhotoContainer = ({ fetchedData, location }) => {
                 .catch((error) => {
                     console.error('Error fetching search results:', error);
                 });
+        } else if (searchQuery) {
+            const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${searchQuery}&per_page=24&format=json&nojsoncallback=1`;
+
+            axios.get(apiUrl)
+                .then((response) => {
+                    if (response.data.photos && response.data.photos.photo) {
+                        const urls = response.data.photos.photo.map(photo => {
+                            return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
+                        });
+
+                        const ids = response.data.photos.photo.map(photo => photo.id);
+
+                        setPhotoUrls(urls);
+                        setIds(ids);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching search results:', error);
+                });
         }
-    }, [searchQuery]);
+    }, [query, searchQuery]);
 
     const resultsFound = photoUrls.length > 0;
 
     return (
         <div className="photo-container">
-            <h2>{searchQuery ? `Search Results for: ${searchQuery}` : 'Results'}</h2>
+            <h2>Search Results for: {query}</h2>
+
 
             <ul>
                 {photoUrls.map((url, index) => (
@@ -64,6 +73,7 @@ const PhotoContainer = ({ fetchedData, location }) => {
 };
 
 export default PhotoContainer;
+
 
 
 
