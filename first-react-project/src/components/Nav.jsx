@@ -1,43 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Importing Link
+import { Link } from "react-router-dom";
 
-
-
-// The app should display 3 random topics (so when fetching get 3 randomly) and apply that to the code
-
-// When I click on any of those topics I should go to a page full of pictures of that topic
-
-
-
-const Nav = ({setTags}) => {
-
-    // Generate 3 random topics for navigation
-
-    const topics = ["cats", "dogs", "computers"];
-    const randomTopics = topics.sort(() => 0.5 - Math.random()).slice(0,3);
+const Nav = ({ setTags }) => {
+    const initialTags = ["cats", "dogs", "computers"];
 
     return (
-
-    <nav className="main-nav">
-
-     <ul>
-
-         {randomTopics.map((topic, index) => (
+        <nav className="main-nav">
+            <ul>
+                {initialTags.map((tag, index) => (
                     <li key={index}>
-                        <Link to={`/search/${topic}`} onClick={() => setTags(topic)}>
-                            {topic.charAt(0).toUpperCase() + topic.slice(1)}
+                        <Link to={`/search/${tag}`} onClick={() => setTags(tag)}>
+                            {tag.charAt(0).toUpperCase() + tag.slice(1)}
                         </Link>
                     </li>
                 ))}
-
-     </ul>
-
-    </nav>
-
-    )
-}
-
-
+            </ul>
+        </nav>
+    );
+};
 
 export default Nav;
+
 
