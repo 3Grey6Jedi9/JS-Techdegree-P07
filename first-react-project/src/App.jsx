@@ -13,6 +13,7 @@ import NotFound from "./components/NotFound.jsx";
 import axios from "axios";
 
 
+
 let tags = "cats"; // the firt 2 calls are not detected
 const perPage = 24;
 
@@ -51,6 +52,7 @@ const App = () => {
             <div className="container">
                 <SearchForm setTags={setTags} /> {/*Passing setTags as a prop*/}
                 <Nav setTags={setTags} /> {/* Pass setTags as a prop */}
+
                 <Routes>
                     <Route path="/" element={<Home title="Home Page" />} />
                     <Route path="/cats" element={<Cats title="Cats Page" />} />
@@ -61,6 +63,7 @@ const App = () => {
                         <Route path="*" element={<NotFound title="404 ERROR"/>}/>
                     }
                 </Routes>
+
                 {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} />}
             </div>
         </Router>
