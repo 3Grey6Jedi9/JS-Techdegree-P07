@@ -23,6 +23,7 @@ const App = () => {
 
     const [tags, setTags] = useState(null)
     const [fetchedData, setFetchedData] = useState(null);
+    const [isDataEmpty, setIsDataEmpty] = useState(false);
 
 
     useEffect(() => {
@@ -36,6 +37,7 @@ const App = () => {
                 // This block of code will run when the request is succesful
                 console.log(response.data); // Accessing the parsed JSON data
                 setFetchedData(response.data);
+                setIsDataEmpty(response.data.photos.photo.length === 0); // Update isDataEmpty
                 console.log(fetchedData)
 
             })
@@ -59,15 +61,15 @@ const App = () => {
                     <Route path="/dogs" element={<Dogs title="Dogs Page" />} /> {/* Use element prop */}
                     <Route path="/computers" element={<Computers title="Computers Page" />} />
                     <Route path="/search/:query" element={<PhotoContainer location={location}/>}/>
-                    <Route path="*" element={<NotFound />} />
+                    {fetchedData && isDataEmpty ? ( // Render Not Found based on isDataEmpty
+                        <Route path="*" element={<NotFound />} />
+                    ) : null}
                 </Routes>
-
-                {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} />}
+                {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} setIsDataEmpty={setIsDataEmpty} />}
             </div>
         </Router>
     );
 };
-
 
 
 
