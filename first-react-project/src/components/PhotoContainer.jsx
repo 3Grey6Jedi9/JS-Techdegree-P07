@@ -27,10 +27,9 @@ const PhotoContainer = () => {
     }, [urlQuery, searchQuery]);
 
     useEffect(() => {
-
-        setIsLoading(true); // Setting loading state when starting to fetch data
-
         if (query) {
+            setIsLoading(true); // Set loading state before fetching data
+
             const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
 
             axios.get(apiUrl)
@@ -45,11 +44,12 @@ const PhotoContainer = () => {
                         setPhotoUrls(searchUrls);
                         setIds(searchIds);
                     }
-                    setIsLoading(false); // Resetting loading state when data is fetched
                 })
                 .catch((error) => {
                     console.error('Error fetching search results:', error);
-                    setIsLoading(false); // Resetting loading state on error
+                })
+                .finally(() => {
+                    setIsLoading(false); // Reset loading state when data fetching is done
                 });
         }
     }, [query]);
@@ -78,6 +78,7 @@ const PhotoContainer = () => {
 };
 
 export default PhotoContainer;
+
 
 
 
