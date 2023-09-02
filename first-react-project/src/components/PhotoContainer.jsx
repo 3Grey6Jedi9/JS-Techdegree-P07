@@ -85,8 +85,6 @@ const PhotoContainer = ({ category }) => {
                             <Photo key={photoIds[index]} imageUrl={url} />
                         ))}
 
-                         {!isLoading && !resultsFound && <NotFound />}
-
                     </ul>
                 </>
             )}
