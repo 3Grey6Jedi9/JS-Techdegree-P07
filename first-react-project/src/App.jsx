@@ -59,9 +59,7 @@ const App = () => {
                     <Route path="/dogs" element={<Dogs title="Dogs Page" />} /> {/* Use element prop */}
                     <Route path="/computers" element={<Computers title="Computers Page" />} />
                     <Route path="/search/:query" element={<PhotoContainer location={location}/>}/>
-                    {!fetchedData &&
-                        <Route path="*" element={<NotFound title="404 ERROR"/>}/>
-                    }
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
 
                 {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} />}
