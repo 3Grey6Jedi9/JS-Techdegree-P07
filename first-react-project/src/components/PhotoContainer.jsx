@@ -5,7 +5,7 @@ import axios from "axios";
 import apiKey from "../assets/config.js";
 import { useParams, useLocation } from "react-router-dom";
 
-const PhotoContainer = ({ category }) => { // Accept category as a prop
+const PhotoContainer = ({ category }) => {
     const [photoUrls, setPhotoUrls] = useState([]);
     const [photoIds, setIds] = useState([]);
     const [query, setQuery] = useState('');
@@ -16,17 +16,23 @@ const PhotoContainer = ({ category }) => { // Accept category as a prop
 
     const [isLoading, setIsLoading] = useState(false);
 
+
     useEffect(() => {
-        if (urlQuery) {
+
+        setPhotoUrls([]);
+        setIds([]);
+
+        if (category) {
+            setQuery(category); // Use category as the query
+        } else if (urlQuery) {
             setQuery(urlQuery);
         } else if (searchQuery) {
             setQuery(searchQuery);
-        } else if (category) { // Use the category prop if provided
-            setQuery(category);
         } else {
             setQuery('');
         }
     }, [urlQuery, searchQuery, category]);
+
 
     useEffect(() => {
         if (query) {
@@ -58,6 +64,12 @@ const PhotoContainer = ({ category }) => { // Accept category as a prop
 
     const resultsFound = photoUrls.length > 0;
 
+    const getCategoryTitle = (category) => {
+        if (category === "cats") return "Cats";
+        if (category === "dogs") return "Dogs";
+        if (category === "computers") return "Computers";
+        return query ? `Search Results for: ${query}` : "";
+    };
 
     return (
         <div className="photo-container">
@@ -65,14 +77,8 @@ const PhotoContainer = ({ category }) => { // Accept category as a prop
                 <h2>Loading...</h2>
             ) : (
                 <>
-                    {category === "cats" ? (
-                        <h2>Photos of Cats</h2>
-                    ) : category === "dogs" ? (
-                        <h2>Photos of Dogs</h2>
-                    ) : category === "computers" ? (
-                        <h2>Photos of Computers</h2>
-                    ) : (
-                        <h2>Search Results for: {query}</h2>
+                    {category && (
+                        <h2>{getCategoryTitle(category)}</h2>
                     )}
                     <ul>
                         {photoUrls.map((url, index) => (
