@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Photo from "./Photo.jsx";
 import NotFound from "./NotFound.jsx";
 import axios from "axios";
-import apiKey from "../assets/config.js"; // Make sure to import apiKey
+import apiKey from "../assets/config.js";
 import { useParams, useLocation } from "react-router-dom";
 
-const PhotoContainer = () => {
+const PhotoContainer = ({ category }) => { // Accept category as a prop
     const [photoUrls, setPhotoUrls] = useState([]);
     const [photoIds, setIds] = useState([]);
     const [query, setQuery] = useState('');
@@ -21,14 +21,16 @@ const PhotoContainer = () => {
             setQuery(urlQuery);
         } else if (searchQuery) {
             setQuery(searchQuery);
+        } else if (category) { // Use the category prop if provided
+            setQuery(category);
         } else {
             setQuery('');
         }
-    }, [urlQuery, searchQuery]);
+    }, [urlQuery, searchQuery, category]);
 
     useEffect(() => {
         if (query) {
-            setIsLoading(true); // Set loading state before fetching data
+            setIsLoading(true);
 
             const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
 
@@ -49,12 +51,13 @@ const PhotoContainer = () => {
                     console.error('Error fetching search results:', error);
                 })
                 .finally(() => {
-                    setIsLoading(false); // Reset loading state when data fetching is done
+                    setIsLoading(false);
                 });
         }
     }, [query]);
 
     const resultsFound = photoUrls.length > 0;
+
 
     return (
         <div className="photo-container">
@@ -62,8 +65,15 @@ const PhotoContainer = () => {
                 <h2>Loading...</h2>
             ) : (
                 <>
-                    <h2>Search Results for: {query}</h2>
-
+                    {category === "cats" ? (
+                        <h2>Photos of Cats</h2>
+                    ) : category === "dogs" ? (
+                        <h2>Photos of Dogs</h2>
+                    ) : category === "computers" ? (
+                        <h2>Photos of Computers</h2>
+                    ) : (
+                        <h2>Search Results for: {query}</h2>
+                    )}
                     <ul>
                         {photoUrls.map((url, index) => (
                             <Photo key={photoIds[index]} imageUrl={url} />
@@ -78,6 +88,12 @@ const PhotoContainer = () => {
 };
 
 export default PhotoContainer;
+
+
+
+
+
+
 
 
 

@@ -9,7 +9,7 @@ const Nav = ({ setTags }) => {
             <ul>
                 {initialTags.map((tag, index) => (
                     <li key={index}>
-                        <Link to={`/search/${tag}`} onClick={() => setTags(tag)}>
+                        <Link to={`/${tag}`} onClick={() => setTags(tag)}>
                             {tag.charAt(0).toUpperCase() + tag.slice(1)}
                         </Link>
                     </li>
