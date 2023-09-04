@@ -5,7 +5,7 @@ import axios from "axios";
 import apiKey from "../assets/config.js";
 import { useParams, useLocation } from "react-router-dom";
 
-const PhotoContainer = ({ category, setIsDataEmpty }) => {
+const PhotoContainer = ({ category, isDataEmpty }) => {
     const [photoUrls, setPhotoUrls] = useState([]);
     const [photoIds, setIds] = useState([]);
     const [query, setQuery] = useState('');

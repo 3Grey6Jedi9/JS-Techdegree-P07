@@ -56,7 +56,7 @@ const App = () => {
                         <Route path="*" element={<NotFound />} />
                     ) : null}
                 </Routes>
-                {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} setIsDataEmpty={setIsDataEmpty} />}
+                {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} isDataEmpty={isDataEmpty} />}
             </div>
         </Router>
     );
