@@ -11,6 +11,7 @@ import Home from "./components/Home.jsx";
 import Computers from "./components/Computers.jsx";
 import NotFound from "./components/NotFound.jsx";
 import axios from "axios";
+import NotFoundRedirect from "./components/NotFoundRedirect.jsx";
 
 
 
@@ -44,16 +45,14 @@ const App = () => {
             <div className="container">
                 <SearchForm setTags={setTags} /> {/*Passing setTags as a prop*/}
                 <Nav setTags={setTags} /> {/* Pass setTags as a prop */}
-
+                <NotFoundRedirect />
                 <Routes>
                     <Route path="/" element={<Home title="Home Page" />} />
                     <Route path="/cats" element={<Cats title="Cats Page" />} />
-                    <Route path="/dogs" element={<Dogs title="Dogs Page" />} /> {/* Use element prop */}
+                    <Route path="/dogs" element={<Dogs title="Dogs Page" />} />
                     <Route path="/computers" element={<Computers title="Computers Page" />} />
-                    <Route path="/search/:query" element={<PhotoContainer location={location}/>}/>
-                    {fetchedData && isDataEmpty ? ( // Render Not Found based on isDataEmpty
-                        <Route path="*" element={<NotFound />} />
-                    ) : null}
+                    <Route path="/search/:query" element={<PhotoContainer fetchedData={fetchedData} />} />
+                    <Route path="/not-found" element={<NotFound />} />
                 </Routes>
                 {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} isDataEmpty={isDataEmpty} />}
             </div>
