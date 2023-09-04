@@ -20,34 +20,25 @@ const perPage = 24;
 
 
 const App = () => {
-
-    const [tags, setTags] = useState(null)
+    const [tags, setTags] = useState(null);
     const [fetchedData, setFetchedData] = useState(null);
     const [isDataEmpty, setIsDataEmpty] = useState(false);
 
+    const fetchData = async () => {
+        try {
+            const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${tags}&per_page=${perPage}&format=json&nojsoncallback=1`;
+            const response = await axios.get(apiUrl);
+            const newData = response.data;
+            setFetchedData(newData);
+            setIsDataEmpty(newData.photos.photo.length === 0);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
-
-        const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${tags}&per_page=${perPage}&format=json&nojsoncallback=1`;
-
-
-        // Fetching data here using axios
-        axios.get(apiUrl) // Sending a GET request
-            .then(response => {
-                // This block of code will run when the request is succesful
-                console.log(response.data); // Accessing the parsed JSON data
-                setFetchedData(response.data);
-                setIsDataEmpty(response.data.photos.photo.length === 0); // Update isDataEmpty
-                console.log(fetchedData)
-
-            })
-            .catch(error => {
-                // This block of code runs when there's an error
-                console.error('Error fetching data:', error);
-
-            });
-
-    }, [tags]); // Updates when tags changes
+        fetchData();
+    }, [tags]);
 
     return (
         <Router>
