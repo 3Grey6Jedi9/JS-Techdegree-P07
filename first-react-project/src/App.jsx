@@ -14,7 +14,6 @@ import axios from "axios";
 
 
 
-let tags = "cats"; // the firt 2 calls are not detected
 const perPage = 24;
 
 
