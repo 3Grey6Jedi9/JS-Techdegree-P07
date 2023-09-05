@@ -4,21 +4,21 @@ import { useNavigate } from "react-router-dom";
 const NotFoundRedirect = () => {
     const navigate = useNavigate();
 
-    // Check if the current path doesn't match specific paths
+    // Checking if the current path doesn't match specific paths
     const currentPath = window.location.pathname;
     const isInvalidPath = !currentPath.startsWith("/search") &&
         currentPath !== "/" &&
         currentPath !== "/cats" &&
         currentPath !== "/dogs" &&
         currentPath !== "/computers" &&
-        currentPath !== "/not-found"; // Add this check
+        currentPath !== "/not-found";
 
-    // If it's an invalid path, navigate to the /not-found page
+    // If it's an invalid path, we'll navigate to the /not-found page
     if (isInvalidPath) {
         navigate("/not-found");
     }
 
-    // Return a message for invalid paths
+    // I will return null because the goal of this file is to manage the wrong route not to display any message
     return null;
 };
 
