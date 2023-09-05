@@ -9,6 +9,7 @@ const PhotoContainer = ({ category, isDataEmpty }) => {
     const [photoUrls, setPhotoUrls] = useState([]);
     const [photoIds, setIds] = useState([]);
     const [query, setQuery] = useState('');
+    const [message, setmessage] = useState(null);
 
     const location = useLocation();
     const searchQuery = new URLSearchParams(location.search).get('q');
@@ -24,12 +25,17 @@ const PhotoContainer = ({ category, isDataEmpty }) => {
 
         if (category) {
             setQuery(category); // Use category as the query
+            setmessage(null);
         } else if (urlQuery) {
             setQuery(urlQuery);
+            setmessage('There is not data related to your quest')
         } else if (searchQuery) {
             setQuery(searchQuery);
+            setmessage('There is not data related to your quest')
         } else {
             setQuery('');
+            setmessage(null);
+
         }
     }, [urlQuery, searchQuery, category]);
 
@@ -80,12 +86,15 @@ const PhotoContainer = ({ category, isDataEmpty }) => {
                     {category && (
                         <h2>{getCategoryTitle(category)}</h2>
                     )}
-                    <ul>
-                        {photoUrls.map((url, index) => (
-                            <Photo key={photoIds[index]} imageUrl={url} />
-                        ))}
-
-                    </ul>
+                    {resultsFound ? (
+                        <ul>
+                            {photoUrls.map((url, index) => (
+                                <Photo key={photoIds[index]} imageUrl={url} />
+                            ))}
+                        </ul>
+                    ) : (
+                        <h3>{message}</h3>
+                    )}
                 </>
             )}
         </div>
