@@ -15,14 +15,14 @@ import NotFoundRedirect from "./components/NotFoundRedirect.jsx";
 
 
 
-const perPage = 24;
+const perPage = 24; // I want to display 24 photos
 
 
 
 const App = () => {
-    const [tags, setTags] = useState(null);
-    const [fetchedData, setFetchedData] = useState(null);
-    const [isDataEmpty, setIsDataEmpty] = useState(false);
+    const [tags, setTags] = useState(null); // I will want to fetch data every time I change the tag
+    const [fetchedData, setFetchedData] = useState(null); // I will want to know the data fetched
+
 
     const fetchData = async () => {
         try {
@@ -30,7 +30,6 @@ const App = () => {
             const response = await axios.get(apiUrl);
             const newData = response.data;
             setFetchedData(newData);
-            setIsDataEmpty(newData.photos.photo.length === 0);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -54,7 +53,7 @@ const App = () => {
                     <Route path="/search/:query" element={<PhotoContainer fetchedData={fetchedData} />} />
                     <Route path="/not-found" element={<NotFound />} />
                 </Routes>
-                {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} isDataEmpty={isDataEmpty} />}
+                {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} />}
             </div>
         </Router>
     );
