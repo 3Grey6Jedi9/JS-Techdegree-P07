@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Photo from "./Photo.jsx";
-import NotFound from "./NotFound.jsx";
 import axios from "axios";
 import apiKey from "../assets/config.js";
 import { useParams, useLocation } from "react-router-dom";
 
-const PhotoContainer = ({ category}) => {
-    const [photoUrls, setPhotoUrls] = useState([]);
-    const [photoIds, setIds] = useState([]);
-    const [query, setQuery] = useState('');
-    const [message, setmessage] = useState(null);
+const PhotoContainer = ({ category}) => { // category is any of the defaults topics, since they are treated in a different way
+    const [photoUrls, setPhotoUrls] = useState([]); // Managing photos
+    const [photoIds, setIds] = useState([]); // Identifying photos
+    const [query, setQuery] = useState(''); // managing queries
+    const [message, setmessage] = useState(null); // No data message
 
+    // Getting the search query
     const location = useLocation();
     const searchQuery = new URLSearchParams(location.search).get('q');
     const { query: urlQuery } = useParams();
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // Managing loading
 
-
+// Updating the message and query values and restarting the PhotoUrls and Ids values to avoid conflicts
     useEffect(() => {
 
         setPhotoUrls([]);
@@ -40,7 +40,7 @@ const PhotoContainer = ({ category}) => {
     }, [urlQuery, searchQuery, category]);
 
 
-    useEffect(() => {
+    useEffect(() => { // fetching data using axios and updating the PhotoUrls and the Ids
         if (query) {
             setIsLoading(true);
 
@@ -68,24 +68,17 @@ const PhotoContainer = ({ category}) => {
         }
     }, [query]);
 
-    const resultsFound = photoUrls.length > 0;
+    const resultsFound = photoUrls.length > 0; // It will be used to manage the data not found message
 
-    const getCategoryTitle = (category) => {
-        if (category === "cats") return "Cats";
-        if (category === "dogs") return "Dogs";
-        if (category === "computers") return "Computers";
-        return query ? `Search Results for: ${query}` : "";
-    };
 
+    // Displaying photos
     return (
         <div className="photo-container">
             {isLoading ? (
                 <h2>Loading...</h2>
             ) : (
                 <>
-                    {category && (
-                        <h2>{getCategoryTitle(category)}</h2>
-                    )}
+
                     {resultsFound ? (
                         <ul>
                             {photoUrls.map((url, index) => (
