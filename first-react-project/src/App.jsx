@@ -24,6 +24,8 @@ const App = () => {
     const [fetchedData, setFetchedData] = useState(null); // I will want to know the data fetched
 
 
+
+    // Managing the fetching using an Asynchronous function
     const fetchData = async () => {
         try {
             const apiUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${tags}&per_page=${perPage}&format=json&nojsoncallback=1`;
@@ -35,23 +37,26 @@ const App = () => {
         }
     };
 
+    // Running that function using a useEffect, data will be fetched every time I change the tag
     useEffect(() => {
         fetchData();
     }, [tags]);
 
-    return (
+
+    // Inside return I define what is going to be render when calling the App component
+    return ( // Here I will render considering the order
         <Router>
             <div className="container">
                 <SearchForm setTags={setTags} /> {/*Passing setTags as a prop*/}
                 <Nav setTags={setTags} /> {/* Pass setTags as a prop */}
-                <NotFoundRedirect />
-                <Routes>
+                <NotFoundRedirect /> {/* to deal succesfully with the 404 Error */}
+                <Routes> {/* Defining differents routes considering the 'first-match' strategy that used by Reach */}
                     <Route path="/" element={<Home title="Home Page" />} />
                     <Route path="/cats" element={<Cats title="Cats Page" />} />
                     <Route path="/dogs" element={<Dogs title="Dogs Page" />} />
                     <Route path="/computers" element={<Computers title="Computers Page" />} />
                     <Route path="/search/:query" element={<PhotoContainer fetchedData={fetchedData} />} />
-                    <Route path="/not-found" element={<NotFound />} />
+                    <Route path="/not-found" element={<NotFound />} /> {/* 404 Error */}
                 </Routes>
                 {fetchedData && <PhotoContainer fetchedData={fetchedData} location={location} />}
             </div>
