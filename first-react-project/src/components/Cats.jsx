@@ -5,7 +5,7 @@ const Cats = ({ title }) => {
     return (
         <div>
             <h1>{title}</h1>
-            <PhotoContainer category="cats" /> {/* Display cat-related photos */}
+            <PhotoContainer category="cats" /> {/* Displaying cat-related photos */}
         </div>
     );
 };

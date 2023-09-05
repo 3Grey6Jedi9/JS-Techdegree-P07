@@ -12,3 +12,5 @@ const NotFound = () => {
 export default NotFound;
 
 
+// This component manages the 404 ERROR message
+
