@@ -27,3 +27,6 @@ dist-ssr
 # API key
 
 src/assets/config.js
+
+./node_modules
+
