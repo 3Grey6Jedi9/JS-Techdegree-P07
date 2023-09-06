@@ -30,3 +30,6 @@ src/assets/config.js
 
 ./node_modules
 
+vite.config.js
+
+.eslintrc.cjs
